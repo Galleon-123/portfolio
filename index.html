@@ -1,426 +1,940 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAGUL KUMAR E | Information Profile</title>
-    <meta name="description" content="Information profile website for RAGUL KUMAR E with LinkedIn, GitHub, Coursera, Credly, and HackerRank details.">
-    <link rel="preconnect" href="https://avatars.githubusercontent.com">
-    <link rel="preconnect" href="https://images.credly.com">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
-    <script src="script.js" defer></script>
+    <title>RAGUL KUMAR E | Digital Command Center</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#030305',
+                        lightBg: '#E9ECEF', 
+                        lightCard: 'rgba(255, 255, 255, 0.65)', 
+                        darkCard: 'rgba(20, 11, 22, 0.6)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'spin-slow': 'spin 5s linear infinite',
+                        'spin-fast': 'spin 1s linear infinite',
+                        'shimmer': 'shimmer 3s linear infinite',
+                        'blob': 'blob 7s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'gemini-star': 'geminiStar 1.5s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 1.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', filter: 'blur(10px)' },
+                            '100%': { opacity: '1', filter: 'blur(0px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '200% center' },
+                            '100%': { backgroundPosition: '-200% center' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        geminiStar: {
+                            '0%': { transform: 'scale(0.8) rotate(0deg)' },
+                            '100%': { transform: 'scale(1.2) rotate(90deg)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-padding-top: 100px; }
+        
+        /* Smooth Global Theme Transitions */
+        body { transition: background-color 0.5s ease, color 0.5s ease; overflow-x: hidden; }
+
+        /* Glass Base & Card Hover Animations */
+        .glass-base {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* The Identity Card Animated Border Wrapper */
+        .identity-wrapper {
+            position: relative;
+            padding: 3px;
+            border-radius: 1.5rem;
+            background: linear-gradient(90deg, #06b6d4, #d946ef, #f43f5e, #f59e0b, #10b981, #06b6d4);
+            background-size: 300% 100%;
+            animation: shimmer 4s linear infinite;
+            box-shadow: 0 0 20px rgba(217, 70, 239, 0.3);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+        }
+        .identity-wrapper:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.5);
+        }
+        .identity-inner {
+            background-color: theme('colors.lightBg');
+            border-radius: calc(1.5rem - 3px);
+            height: 100%;
+        }
+        .dark .identity-inner {
+            background-color: theme('colors.void');
+        }
+
+        /* Text Gradients */
+        .gemini-text {
+            background: linear-gradient(90deg, #06b6d4, #d946ef, #f43f5e, #f59e0b, #06b6d4);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+
+        .progress-bar-fill { transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #d946ef; border-radius: 10px; }
+    </style>
 </head>
+<body class="antialiased min-h-screen bg-lightBg dark:bg-void text-slate-800 dark:text-white selection:bg-fuchsia-500 selection:text-white">
+    <div id="root"></div>
 
-<body>
-    <div class="ambient-video" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <header class="site-header">
-        <a class="brand" href="#top" aria-label="RAGUL KUMAR E home">
-            <span class="brand-mark">RK</span>
-            <span>RAGUL KUMAR E</span>
-        </a>
-        <div class="header-controls">
-            <nav class="nav-links tab-switch" aria-label="Main navigation">
-                <span class="tab-indicator" aria-hidden="true"></span>
-                <a class="tab-link is-active" href="#top" data-tab="top" aria-current="page">
-                    <i data-lucide="home" data-fallback="H" aria-hidden="true"></i>
-                    <span>Home</span>
-                </a>
-                <a class="tab-link" href="#profile" data-tab="profile">
-                    <i data-lucide="user" data-fallback="P" aria-hidden="true"></i>
-                    <span>Profile</span>
-                </a>
-                <a class="tab-link" href="#learning" data-tab="learning">
-                    <i data-lucide="image" data-fallback="L" aria-hidden="true"></i>
-                    <span>Learning</span>
-                </a>
-                <a class="tab-link" href="#projects" data-tab="projects">
-                    <i data-lucide="users" data-fallback="J" aria-hidden="true"></i>
-                    <span>Projects</span>
-                </a>
-                <a class="tab-link" href="#sources" data-tab="sources">
-                    <i data-lucide="link" data-fallback="S" aria-hidden="true"></i>
-                    <span>Sources</span>
-                </a>
-            </nav>
-            <button class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
-                <span class="toggle-track" aria-hidden="true">
-                    <span class="toggle-thumb"></span>
-                </span>
-                <span class="theme-toggle-label sr-only">Dark mode</span>
-            </button>
-            <span class="theme-toast" role="status" aria-live="polite">Light mode</span>
-        </div>
-    </header>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-    <main id="top">
-        <section class="hero-section" aria-labelledby="hero-title">
-            <div class="cyber-grid" aria-hidden="true"></div>
-            <div class="hero-inner">
-                <div class="hero-copy">
-                    <p class="eyebrow">IT portfolio - data science - cloud security</p>
-                    <h1 id="hero-title">RAGUL KUMAR E</h1>
-                    <p class="hero-summary">
-                        A professional portfolio dashboard for AI learning, data science, software practice, and cloud security interest, presented a portfolio...
-                    </p>
-                    <div class="member-stack" aria-label="Learning focus areas">
-                        <span>Python</span>
-                        <span>C++</span>
-                        <span>Cloud Security</span>
-                        <span>AI</span>
-                        <span>Data Science</span>
+        // --- 100% React Safe Icon Wrapper ---
+        const Icon = ({ name, size = 24, className = "" }) => {
+            const [svgContent, setSvgContent] = useState('');
+            useEffect(() => {
+                if (window.lucide && window.lucide.icons[name]) {
+                    setSvgContent(window.lucide.icons[name].toSvg({ class: className, width: size, height: size }));
+                }
+            }, [name, size, className]);
+            return <span className="inline-flex items-center justify-center transition-all duration-300" dangerouslySetInnerHTML={{ __html: svgContent }} />;
+        };
+
+        // --- Cinematic Scroll Reveal ---
+        const Reveal = ({ children, delay = 0, direction = "up", className = "" }) => {
+            const ref = useRef(null);
+            const [isVisible, setIsVisible] = useState(false);
+
+            useEffect(() => {
+                const observer = new IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting) {
+                        setIsVisible(true);
+                        observer.unobserve(entry.target);
+                    }
+                }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+                
+                if (ref.current) observer.observe(ref.current);
+                return () => observer.disconnect();
+            }, []);
+
+            const getTransform = () => {
+                if (isVisible) return 'translate-y-0 translate-x-0 scale-100 opacity-100 blur-0';
+                switch(direction) {
+                    case 'up': return 'translate-y-16 scale-[0.95] opacity-0 blur-[8px]';
+                    case 'left': return '-translate-x-16 scale-[0.95] opacity-0 blur-[8px]';
+                    case 'right': return 'translate-x-16 scale-[0.95] opacity-0 blur-[8px]';
+                    default: return 'translate-y-16 scale-[0.95] opacity-0 blur-[8px]';
+                }
+            };
+
+            return (
+                <div ref={ref} style={{ transitionDelay: `${delay}ms` }} className={`transition-all duration-[1000ms] cubic-bezier(0.2, 0.8, 0.2, 1) ${getTransform()} ${className}`}>
+                    {children}
+                </div>
+            );
+        };
+
+        // --- Multi-color Dynamic Hover Array ---
+        const glowStyles = [
+            { border: 'border-cyan-500/40 hover:border-cyan-500', text: 'group-hover:text-cyan-500', bg: 'group-hover:bg-cyan-500/10', dot: 'bg-cyan-500/20 group-hover:bg-cyan-500', shadow: 'hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]', textStatic: 'text-cyan-600 dark:text-cyan-400', hex: '#06b6d4' },
+            { border: 'border-fuchsia-500/40 hover:border-fuchsia-500', text: 'group-hover:text-fuchsia-500', bg: 'group-hover:bg-fuchsia-500/10', dot: 'bg-fuchsia-500/20 group-hover:bg-fuchsia-500', shadow: 'hover:shadow-[0_0_20px_rgba(217,70,239,0.4)]', textStatic: 'text-fuchsia-600 dark:text-fuchsia-400', hex: '#d946ef' },
+            { border: 'border-emerald-500/40 hover:border-emerald-500', text: 'group-hover:text-emerald-500', bg: 'group-hover:bg-emerald-500/10', dot: 'bg-emerald-500/20 group-hover:bg-emerald-500', shadow: 'hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]', textStatic: 'text-emerald-600 dark:text-emerald-400', hex: '#10b981' },
+            { border: 'border-amber-500/40 hover:border-amber-500', text: 'group-hover:text-amber-500', bg: 'group-hover:bg-amber-500/10', dot: 'bg-amber-500/20 group-hover:bg-amber-500', shadow: 'hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]', textStatic: 'text-amber-600 dark:text-amber-400', hex: '#f59e0b' },
+            { border: 'border-rose-500/40 hover:border-rose-500', text: 'group-hover:text-rose-500', bg: 'group-hover:bg-rose-500/10', dot: 'bg-rose-500/20 group-hover:bg-rose-500', shadow: 'hover:shadow-[0_0_20px_rgba(244,63,94,0.4)]', textStatic: 'text-rose-600 dark:text-rose-400', hex: '#f43f5e' },
+            { border: 'border-indigo-500/40 hover:border-indigo-500', text: 'group-hover:text-indigo-500', bg: 'group-hover:bg-indigo-500/10', dot: 'bg-indigo-500/20 group-hover:bg-indigo-500', shadow: 'hover:shadow-[0_0_20px_rgba(99,102,241,0.4)]', textStatic: 'text-indigo-600 dark:text-indigo-400', hex: '#6366f1' },
+            { border: 'border-lime-500/40 hover:border-lime-500', text: 'group-hover:text-lime-500', bg: 'group-hover:bg-lime-500/10', dot: 'bg-lime-500/20 group-hover:bg-lime-500', shadow: 'hover:shadow-[0_0_20px_rgba(132,204,22,0.4)]', textStatic: 'text-lime-600 dark:text-lime-400', hex: '#84cc16' }
+        ];
+
+        // --- Gemini AI Entry Sequence ---
+        const GeminiEntry = ({ onComplete }) => {
+            const [stage, setStage] = useState(0);
+            useEffect(() => {
+                const t1 = setTimeout(() => setStage(1), 1800); 
+                const t2 = setTimeout(() => setStage(2), 2600); 
+                const t3 = setTimeout(() => onComplete(), 3200); 
+                return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+            }, [onComplete]);
+
+            return (
+                <div className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-lightBg dark:bg-void transition-opacity duration-700 ${stage === 2 ? 'opacity-0' : 'opacity-100'}`}>
+                    <div className="relative flex items-center justify-center">
+                        <div className={`absolute w-32 h-32 rounded-full bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-amber-500 blur-[40px] transition-all duration-700 ease-in-out ${stage >= 1 ? 'scale-[30] opacity-0' : 'animate-spin-slow opacity-100'}`}></div>
+                        <svg className={`relative z-10 w-20 h-20 transition-all duration-700 ${stage >= 1 ? 'scale-0 opacity-0 rotate-180' : 'animate-gemini-star'}`} viewBox="0 0 24 24" fill="none">
+                            <path d="M12 0C12 6.62742 17.3726 12 24 12C17.3726 12 12 17.3726 12 24C12 17.3726 6.62742 12 0 12C6.62742 12 12 6.62742 12 0Z" fill="url(#gemini-grad)"/>
+                            <defs>
+                                <linearGradient id="gemini-grad" x1="0" y1="0" x2="24" y2="24">
+                                    <stop stopColor="#06b6d4" />
+                                    <stop offset="0.5" stopColor="#d946ef" />
+                                    <stop offset="1" stopColor="#f59e0b" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
                     </div>
-                    <div class="hero-signal-strip" aria-label="Profile highlights">
-                        <div>
-                            <strong>5</strong>
-                            <span>public profile sources</span>
-                        </div>
-                        <div>
-                            <strong>9</strong>
-                            <span>visible Coursera courses</span>
-                        </div>
-                        <div>
-                            <strong>7</strong>
-                            <span>target career paths</span>
-                        </div>
-                    </div>
-                    <div class="hero-actions" aria-label="Profile links">
-                        <a href="https://www.linkedin.com/in/ragul-kumar-e-5ba272399" target="_blank" rel="noreferrer">LinkedIn</a>
-                        <a href="https://github.com/Galleon-123" target="_blank" rel="noreferrer">GitHub</a>
-                        <a href="https://www.coursera.org/user/92a729aaba78f5ec50fa6c3c2610d7a1" target="_blank" rel="noreferrer">Coursera</a>
-                        <a href="https://www.credly.com/users/ragul-kumar-e" target="_blank" rel="noreferrer">Credly</a>
-                        <a href="https://www.hackerrank.com/profile/ragulkumare2007" target="_blank" rel="noreferrer">HackerRank</a>
+                    <div className={`mt-10 font-display font-bold tracking-widest text-xl gemini-text transition-all duration-500 ${stage >= 1 ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'}`}>
+                        INITIALIZING COMMAND CENTER
                     </div>
                 </div>
+            );
+        };
 
-                <aside class="hero-panel" aria-label="Profile snapshot">
-                    <span class="panel-chip">Live identity card</span>
-                    <img id="profileAvatar" class="avatar" src="https://avatars.githubusercontent.com/u/221684034?v=4" alt="GitHub avatar for RAGUL KUMAR E">
-                    <div class="identity">
-                        <strong>Galleon-123</strong>
-                        <span>GitHub public profile</span>
-                    </div>
-                    <dl class="quick-stats">
-                        <div>
-                            <dt>Location</dt>
-                            <dd>Coimbatore, Tamil Nadu, India</dd>
-                        </div>
-                        <div>
-                            <dt>Education</dt>
-                            <dd>Sri Krishna College of Engineering and Technology</dd>
-                        </div>
-                        <div>
-                            <dt>LinkedIn</dt>
-                            <dd>116 followers, 112 connections</dd>
-                        </div>
-                        <div>
-                            <dt>Focus</dt>
-                            <dd>Python, C++, Cloud Security, AI, Data Analysis, Prompt Engineering</dd>
-                        </div>
-                    </dl>
-                </aside>
-
-                <div class="dashboard-widgets" aria-label="Profile dashboard widgets">
-                    <article class="control-card learning-dial">
-                        <div class="widget-head">
-                            <span>AI Focus</span>
-                            <i data-lucide="power" data-fallback="P" aria-hidden="true"></i>
-                        </div>
-                        <strong>90%</strong>
-                        <p>Artificial Intelligence learning map</p>
-                        <meter value="90" min="0" max="100">90%</meter>
-                    </article>
-
-                    <article class="control-card">
-                        <div class="widget-head">
-                            <span>GitHub</span>
-                            <i data-lucide="github" data-fallback="G" aria-hidden="true"></i>
-                        </div>
-                        <strong id="heroRepoCount">1 repo</strong>
-                        <p>Live public repository signal</p>
-                    </article>
-
-                    <article class="control-card">
-                        <div class="widget-head">
-                            <span>Career</span>
-                            <i data-lucide="radar" data-fallback="R" aria-hidden="true"></i>
-                        </div>
-                        <strong>7 paths</strong>
-                        <p>Cyber, data, automation, ML and Python roles</p>
-                    </article>
-
-                    <article class="control-card media-card">
-                        <div class="widget-head">
-                            <span>Credential</span>
-                            <i data-lucide="badge-check" data-fallback="C" aria-hidden="true"></i>
-                        </div>
-                        <img src="https://images.credly.com/images/73c08e76-eb9c-4c03-92da-3dad49e99e5a/Getting_Started_With_Artificial_Intelligence_Badge.png" alt="IBM SkillsBuild AI credential badge">
-                        <p>IBM SkillsBuild AI</p>
-                    </article>
-                </div>
+        // --- Ambient Background Blobs ---
+        const AmbientBlobs = () => (
+            <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+                <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-cyan-500/10 dark:bg-cyan-500/15 blur-[120px] animate-blob transition-colors duration-700"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-fuchsia-500/10 dark:bg-fuchsia-500/15 blur-[120px] animate-blob transition-colors duration-700" style={{animationDelay: '2s'}}></div>
             </div>
-        </section>
+        );
 
-        <section id="profile" class="section-band">
-            <div class="section-inner two-column">
+        // --- Global Sync Context ---
+        const SyncContext = React.createContext();
+
+        // --- Navigation ---
+        const Navbar = ({ theme, toggleTheme }) => {
+            const [activeSection, setActiveSection] = useState('home');
+            const { isSyncing, triggerSync } = React.useContext(SyncContext);
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    const sections = ['home', 'social', 'profile', 'learning', 'projects'];
+                    const scrollPos = window.scrollY + 200;
+                    for (const id of sections.reverse()) {
+                        const el = document.getElementById(id);
+                        if (el && el.offsetTop <= scrollPos) {
+                            setActiveSection(id);
+                            break;
+                        }
+                    }
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            return (
+                <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-6xl">
+                    <div className="glass-base bg-lightCard dark:bg-darkCard border border-white/40 dark:border-white/10 rounded-full px-4 lg:px-6 py-4 flex items-center justify-between shadow-lg dark:shadow-2xl transition-all">
+                        <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo(0,0)}>
+                            <div className="w-3 h-3 rounded-full bg-cyan-500 animate-pulse group-hover:scale-125 transition-transform"></div>
+                            <span className="font-display font-black tracking-widest text-sm text-slate-900 dark:text-white hidden lg:block group-hover:text-cyan-500 transition-colors">
+                                RAGUL KUMAR E
+                            </span>
+                        </div>
+                        
+                        <div className="flex items-center gap-1 md:gap-3 font-mono text-[9px] md:text-xs font-bold tracking-widest">
+                            {['home', 'social', 'profile', 'learning', 'projects'].map((sec, i) => {
+                                const activeColor = glowStyles[i % glowStyles.length];
+                                return (
+                                    <a key={sec} href={`#${sec}`} className={`uppercase px-3 py-2 rounded-full transition-all duration-300 active:scale-95 ${activeSection === sec ? `bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-[0_0_15px_${activeColor.hex}80]` : `text-slate-500 dark:text-gray-400 hover:${activeColor.textStatic} hover:bg-slate-200 dark:hover:bg-white/10`}`}>
+                                        {sec}
+                                    </a>
+                                )
+                            })}
+                        </div>
+                        
+                        <div className="flex items-center gap-2 lg:gap-4">
+                            <button onClick={triggerSync} className="hidden md:flex items-center gap-2 font-mono text-[10px] tracking-widest bg-white/60 dark:bg-white/10 border border-slate-300 dark:border-white/10 px-4 py-2 rounded-full hover:border-cyan-500 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:text-cyan-600 dark:hover:text-cyan-400 transition-all text-slate-700 dark:text-white active:scale-95 group">
+                                <Icon name="refresh-cw" size={14} className={isSyncing ? "animate-spin-fast text-cyan-500" : "group-hover:text-cyan-500 transition-colors"} />
+                                {isSyncing ? "SYNCING..." : "SYNC"}
+                            </button>
+                            <button onClick={toggleTheme} className="p-2 rounded-full bg-white/80 dark:bg-white/10 text-slate-600 dark:text-gray-300 hover:shadow-md transition-all active:scale-90 border border-slate-200 dark:border-transparent hover:text-amber-500 dark:hover:text-amber-400">
+                                <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={18} />
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+            );
+        };
+
+        // --- AI Chatbot Component ---
+        const Chatbot = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const [messages, setMessages] = useState([
+                { sender: 'bot', text: "Hello! I'm RK's AI Assistant. Ask me about his skills, projects, or how to contact him." }
+            ]);
+            const [input, setInput] = useState('');
+            const endRef = useRef(null);
+
+            useEffect(() => {
+                if(isOpen && endRef.current) endRef.current.scrollIntoView({ behavior: "smooth" });
+            }, [messages, isOpen]);
+
+            const handleSend = (e) => {
+                e.preventDefault();
+                if(!input.trim()) return;
+                
+                const userText = input;
+                setMessages(prev => [...prev, { sender: 'user', text: userText }]);
+                setInput('');
+
+                setTimeout(() => {
+                    let reply = "I'm a simple assistant. To get in touch directly, please use the LinkedIn link in the footer!";
+                    const lower = userText.toLowerCase();
+                    
+                    if(lower.includes('skill') || lower.includes('know')) reply = "Ragul specializes in Artificial Intelligence, Python, C++, and Cloud Security.";
+                    else if(lower.includes('project') || lower.includes('repo')) reply = "He has several public repositories syncing live right now! Check out the 'Projects' section.";
+                    else if(lower.includes('contact') || lower.includes('hire')) reply = "You can reach him professionally via his LinkedIn profile linked below.";
+                    else if(lower.includes('course') || lower.includes('cert')) reply = "He holds a Google AI Professional Cert, Google AI Essentials, and an IBM SkillsBuild credential.";
+                    
+                    setMessages(prev => [...prev, { sender: 'bot', text: reply }]);
+                }, 800);
+            };
+
+            return (
+                <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+                    <div className={`mb-4 w-80 glass-base bg-lightCard dark:bg-[#120B16]/90 border border-white/50 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden transition-all duration-500 origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0 pointer-events-none'}`}>
+                        <div className="bg-gradient-to-r from-cyan-500 to-fuchsia-500 p-4 flex items-center justify-between text-white shadow-md">
+                            <div className="flex items-center gap-2">
+                                <Icon name="bot" size={20} />
+                                <span className="font-display font-bold text-sm tracking-wide">RK Assistant</span>
+                            </div>
+                            <button onClick={() => setIsOpen(false)} className="hover:rotate-90 transition-transform active:scale-90"><Icon name="x" size={18} /></button>
+                        </div>
+                        
+                        <div className="h-64 overflow-y-auto p-4 flex flex-col gap-3">
+                            {messages.map((m, i) => (
+                                <div key={i} className={`max-w-[85%] p-3 rounded-2xl text-sm font-sans shadow-sm transition-all animate-fade-in ${m.sender === 'bot' ? 'bg-white dark:bg-white/10 text-slate-800 dark:text-gray-200 self-start rounded-tl-none border border-slate-200 dark:border-transparent' : 'bg-cyan-500 text-white self-end rounded-tr-none'}`}>
+                                    {m.text}
+                                </div>
+                            ))}
+                            <div ref={endRef} />
+                        </div>
+                        
+                        <form onSubmit={handleSend} className="p-3 border-t border-slate-200 dark:border-white/10 flex items-center gap-2 bg-white/50 dark:bg-transparent">
+                            <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Type a message..." className="flex-1 bg-transparent text-sm focus:outline-none text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-gray-500" />
+                            <button type="submit" className="p-2 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:scale-110 hover:shadow-[0_0_15px_rgba(6,182,212,0.5)] transition-all active:scale-95"><Icon name="send" size={14}/></button>
+                        </form>
+                    </div>
+
+                    <button onClick={() => setIsOpen(!isOpen)} className="w-14 h-14 rounded-full bg-gradient-to-tr from-cyan-500 to-fuchsia-500 text-white flex items-center justify-center shadow-[0_0_20px_rgba(217,70,239,0.4)] hover:scale-110 active:scale-90 transition-all duration-300">
+                        <Icon name={isOpen ? "x" : "message-square"} size={24} className={isOpen ? "rotate-90 transition-transform" : "transition-transform"} />
+                    </button>
+                </div>
+            );
+        };
+
+        // --- Sections ---
+
+        const Home = () => {
+            const { gitData } = React.useContext(SyncContext);
+            
+            // Full links array added directly to the hero section
+            const accountLinks = [
+                { name: "LinkedIn", url: "https://www.linkedin.com/in/ragul-kumar-e-5ba272399", icon: "linkedin", c: glowStyles[0] },
+                { name: "GitHub", url: "https://github.com/Galleon-123", icon: "github", c: glowStyles[1] },
+                { name: "Coursera", url: "https://www.coursera.org/user/92a729aaba78f5ec50fa6c3c2610d7a1", icon: "book", c: glowStyles[2] },
+                { name: "Credly", url: "https://www.credly.com/users/ragul-kumar-e", icon: "award", c: glowStyles[3] },
+                { name: "HackerRank", url: "https://www.hackerrank.com/profile/ragulkumare2007", icon: "code", c: glowStyles[4] }
+            ];
+
+            return (
+                <section id="home" className="relative min-h-screen pt-32 pb-12 z-10 max-w-[1400px] mx-auto px-6 lg:px-16 flex flex-col justify-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+                        <div className="lg:col-span-7 flex flex-col gap-6">
+                            <Reveal delay={100}>
+                                <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-widest">
+                                    <span className="glass-base bg-lightCard dark:bg-white/5 border border-white/50 dark:border-cyan-500/30 px-4 py-1.5 rounded-full text-slate-800 dark:text-white font-bold uppercase shadow-sm">
+                                        IT Portfolio - Data Science - Cloud Security
+                                    </span>
+                                </div>
+                            </Reveal>
+                            
+                            <Reveal delay={200}>
+                                <h1 className="text-5xl lg:text-7xl font-display font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
+                                    RAGUL KUMAR E
+                                </h1>
+                                <h2 className="text-3xl lg:text-4xl font-display font-bold mt-2 gemini-text">Tech Enthusiast.</h2>
+                            </Reveal>
+                            
+                            <Reveal delay={300}>
+                                <p className="text-slate-600 dark:text-gray-400 font-sans text-base leading-relaxed max-w-xl">
+                                    A professional digital command center for AI learning, data science, software architecture, and cloud security, presenting a verified public record and real-time analytics.
+                                </p>
+                            </Reveal>
+
+                            <Reveal delay={400}>
+                                <div className="flex flex-wrap gap-3 mt-4">
+                                    {["Python", "C++", "Cloud Security", "AI", "Data Science"].map((skill, i) => {
+                                        const c = glowStyles[i%glowStyles.length];
+                                        return (
+                                            <span key={i} className={`font-mono text-[11px] font-bold border bg-white dark:bg-white/5 px-4 py-2 rounded-full cursor-default transition-all duration-300 shadow-sm hover:scale-105 hover:-translate-y-1 ${c.border} ${c.textStatic} ${c.text} ${c.shadow}`}>
+                                                {skill}
+                                            </span>
+                                        );
+                                    })}
+                                </div>
+                            </Reveal>
+                            
+                            {/* RESTORED: Account Links directly in Hero */}
+                            <Reveal delay={500}>
+                                <div className="flex flex-wrap gap-4 mt-4">
+                                    {accountLinks.map((link, i) => (
+                                        <a key={i} href={link.url} target="_blank" className={`flex items-center gap-2 glass-base bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 px-5 py-2.5 rounded-full transition-all text-[10px] font-mono font-bold tracking-widest text-slate-600 dark:text-gray-300 shadow-sm hover:scale-105 active:scale-95 group hover:-translate-y-1 ${link.c.border} ${link.c.text} ${link.c.shadow} ${link.c.bg}`}>
+                                            <Icon name={link.icon} size={14} className="group-hover:scale-110 transition-transform" /> {link.name}
+                                        </a>
+                                    ))}
+                                </div>
+                            </Reveal>
+                        </div>
+
+                        {/* Identity Card with Spinning Gradient Animation */}
+                        <div className="lg:col-span-5 relative flex justify-center">
+                            <Reveal delay={300} direction="left" className="w-full max-w-sm">
+                                <div className="identity-wrapper">
+                                    <div className="identity-inner glass-base p-6">
+                                        <span className="inline-block px-3 py-1 bg-white dark:bg-white/10 rounded-full font-mono text-[10px] text-slate-600 dark:text-gray-300 mb-4 font-bold tracking-widest shadow-sm">LIVE IDENTITY CARD</span>
+                                        
+                                        <div className="flex items-center gap-6 mb-6">
+                                            <img src="https://avatars.githubusercontent.com/u/221684034?v=4" alt="Avatar" className="w-24 h-24 rounded-2xl object-cover border border-slate-200 dark:border-white/10 shadow-[0_0_15px_rgba(6,182,212,0.2)] hover:rotate-3 hover:scale-105 transition-transform duration-300" />
+                                            <div>
+                                                <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white">Galleon-123</h3>
+                                                <p className="font-sans text-xs text-slate-500 dark:text-gray-400">GitHub public profile</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="space-y-3 font-sans text-sm">
+                                            <div className="flex flex-col border-t border-slate-200 dark:border-white/10 pt-3">
+                                                <span className="font-mono text-[10px] text-cyan-600 dark:text-cyan-500 uppercase tracking-widest font-bold">Location</span>
+                                                <span className="text-slate-800 dark:text-gray-200">Coimbatore, Tamil Nadu, India</span>
+                                            </div>
+                                            <div className="flex flex-col border-t border-slate-200 dark:border-white/10 pt-3">
+                                                <span className="font-mono text-[10px] text-fuchsia-600 dark:text-fuchsia-500 uppercase tracking-widest font-bold">Education</span>
+                                                <span className="text-slate-800 dark:text-gray-200">SKCET (2025 - Present)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Reveal>
+                        </div>
+                    </div>
+
+                    {/* Dashboard Widgets (With distinct colors) */}
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                        {[
+                            { title: "AI Focus", icon: "power", val: "90%", desc: "Artificial Intelligence map", c: glowStyles[0] },
+                            { title: "GitHub", icon: "github", val: `${gitData.repos} repo`, desc: "Live public signal", c: glowStyles[1] },
+                            { title: "Career", icon: "radar", val: "7 paths", desc: "Cyber, data, ML roles", c: glowStyles[2] },
+                            { title: "Credential", icon: "badge-check", val: "IBM AI", desc: "SkillsBuild Foundation", c: glowStyles[3] },
+                        ].map((w, i) => (
+                            <Reveal key={i} delay={i*100}>
+                                <div className={`glass-base bg-lightCard dark:bg-darkCard border p-6 rounded-2xl h-full flex flex-col group transition-all duration-300 shadow-md hover:-translate-y-2 cursor-default ${w.c.border} ${w.c.shadow} ${w.c.bg}`}>
+                                    <div className="flex justify-between items-center mb-4">
+                                        <span className="font-mono text-xs font-bold text-slate-800 dark:text-white uppercase tracking-widest">{w.title}</span>
+                                        <Icon name={w.icon} size={18} className={`transition-all duration-300 ${w.c.textStatic} ${w.c.text} group-hover:scale-125 group-hover:rotate-12`} />
+                                    </div>
+                                    <div className={`text-2xl lg:text-3xl font-display font-black mt-auto mb-1 transition-colors ${w.c.textStatic} ${w.c.text}`}>{w.val}</div>
+                                    <p className="text-xs text-slate-500 dark:text-gray-400">{w.desc}</p>
+                                </div>
+                            </Reveal>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        const SocialAnalytics = () => {
+            const { isSyncing, lastSynced } = React.useContext(SyncContext);
+
+            const stats = [
+                { title: "Post Impressions", val: "12,450", trend: "+24%", up: true, c: glowStyles[2] }, 
+                { title: "Profile Views", val: "1,240", trend: "+12%", up: true, c: glowStyles[0] }, 
+                { title: "Search Appearances", val: "340", trend: "-5%", up: false, c: glowStyles[4] }, 
+            ];
+
+            const posts = [
+                { 
+                    date: "1 Week Ago", 
+                    text: "Excited to share that I've completed the Google AI Professional Certificate! Deeply exploring machine learning workflows and GCP architecture. 🚀 #ArtificialIntelligence #GCP #MachineLearning",
+                    likes: 142, comments: 24, c: glowStyles[1]
+                },
+                { 
+                    date: "3 Weeks Ago", 
+                    text: "Just pushed my latest repository focusing on real-time Cloud Security event monitoring. Integrating Python automation with cloud logs has been incredibly rewarding. Check out my GitHub! 🛡️☁️",
+                    likes: 89, comments: 12, c: glowStyles[3]
+                }
+            ];
+
+            return (
+                <section id="social" className="py-24 relative z-10 max-w-[1400px] mx-auto px-6 lg:px-16 border-t border-slate-300 dark:border-white/10">
+                    <Reveal>
+                        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                            <div>
+                                <h2 className="text-4xl md:text-5xl font-display font-black text-slate-900 dark:text-white">Social & Analytics.</h2>
+                                <p className="text-xs text-slate-500 dark:text-gray-400 mt-2 font-mono tracking-widest uppercase">Last 1 Year LinkedIn Performance</p>
+                            </div>
+                            <span className="font-mono text-[10px] tracking-widest text-slate-500 flex items-center gap-2 bg-white/50 dark:bg-transparent px-3 py-1 rounded-full border border-slate-200 dark:border-white/10 shadow-sm">
+                                <Icon name="clock" size={12}/> LAST SYNCED: {lastSynced}
+                            </span>
+                        </div>
+                    </Reveal>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                        {stats.map((stat, i) => (
+                            <Reveal key={i} delay={i*100}>
+                                <div className={`glass-base bg-lightCard dark:bg-darkCard border p-6 rounded-2xl flex flex-col group transition-all duration-300 shadow-md hover:-translate-y-2 cursor-default ${stat.c.border} ${stat.c.shadow} ${stat.c.bg}`}>
+                                    <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500 dark:text-gray-400 font-bold mb-4">{stat.title}</span>
+                                    <div className="flex items-end justify-between">
+                                        <span className={`text-4xl font-display font-black transition-colors ${stat.c.textStatic} ${stat.c.text}`}>
+                                            {isSyncing ? "..." : stat.val}
+                                        </span>
+                                        <span className={`font-mono text-xs font-bold flex items-center gap-1 ${stat.up ? 'text-emerald-500' : 'text-rose-500'}`}>
+                                            {isSyncing ? "" : stat.trend} 
+                                            {!isSyncing && <Icon name={stat.up ? 'trending-up' : 'trending-down'} size={14} />}
+                                        </span>
+                                    </div>
+                                </div>
+                            </Reveal>
+                        ))}
+                    </div>
+
+                    <Reveal>
+                        <h3 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                            <Icon name="linkedin" size={20} className="text-[#0A66C2]" /> Recent Activity
+                        </h3>
+                    </Reveal>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {posts.map((post, i) => (
+                            <Reveal key={i} delay={i*150}>
+                                <div className={`glass-base bg-lightCard dark:bg-darkCard border p-6 rounded-2xl transition-all duration-300 shadow-sm group hover:-translate-y-2 cursor-pointer hover:border-[#0A66C2]/50 hover:shadow-[0_0_25px_rgba(10,102,194,0.2)]`}>
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <img src="https://avatars.githubusercontent.com/u/221684034?v=4" alt="Avatar" className="w-10 h-10 rounded-full group-hover:scale-105 transition-transform duration-300" />
+                                        <div>
+                                            <h4 className={`font-sans font-bold text-sm transition-colors ${post.c.textStatic} ${post.c.text}`}>Ragul Kumar E</h4>
+                                            <span className="font-mono text-[10px] text-slate-500 dark:text-gray-400">{post.date}</span>
+                                        </div>
+                                    </div>
+                                    <p className="font-sans text-sm text-slate-700 dark:text-gray-300 mb-6 leading-relaxed">
+                                        {post.text}
+                                    </p>
+                                    <div className="flex items-center gap-4 font-mono text-[10px] text-slate-500 dark:text-gray-400">
+                                        <span className={`flex items-center gap-1 transition-colors group-hover:text-[#0A66C2]`}><Icon name="thumbs-up" size={14} /> {post.likes}</span>
+                                        <span className={`flex items-center gap-1 transition-colors group-hover:text-[#0A66C2]`}><Icon name="message-square" size={14} /> {post.comments}</span>
+                                    </div>
+                                </div>
+                            </Reveal>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        const Profile = () => {
+            const skills = [
+                { name: "Artificial Intelligence", val: 90, grad: "from-cyan-400 to-fuchsia-500", c: glowStyles[0] },
+                { name: "Data Analysis", val: 82, grad: "from-fuchsia-500 to-rose-500", c: glowStyles[1] },
+                { name: "Prompt Engineering", val: 78, grad: "from-rose-500 to-amber-500", c: glowStyles[2] },
+                { name: "Python Development", val: 70, grad: "from-amber-500 to-emerald-500", c: glowStyles[3] },
+                { name: "Cyber Security Interest", val: 66, grad: "from-emerald-500 to-cyan-400", c: glowStyles[4] },
+            ];
+
+            const techCards = [
+                { title: "Python", label: "Programming", desc: "Automation, AI experiments, data workflows, scripting, and practical software foundations.", icon: "file-code", c: glowStyles[0] },
+                { title: "C++", label: "Core Logic", desc: "Structured programming, problem solving, memory-aware thinking, and performance-focused basics.", icon: "terminal", c: glowStyles[1] },
+                { title: "Cloud Security", label: "Security", desc: "Security-first interest across cloud platforms, access control, risk awareness, and protected systems.", icon: "shield-check", c: glowStyles[2] },
+            ];
+
+            const [isVisible, setIsVisible] = useState(false);
+            const ref = useRef(null);
+            useEffect(() => {
+                const observer = new IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(entry.target); }
+                }, { threshold: 0.3 });
+                if (ref.current) observer.observe(ref.current);
+                return () => observer.disconnect();
+            }, []);
+
+            return (
+                <section id="profile" className="py-24 relative z-10 max-w-[1400px] mx-auto px-6 lg:px-16 border-t border-slate-300 dark:border-white/10">
+                    <Reveal><h2 className="text-4xl md:text-5xl font-display font-black mb-12 text-slate-900 dark:text-white">Technical Profile.</h2></Reveal>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+                        <div>
+                            <div className="space-y-8 border-l border-slate-300 dark:border-white/20 ml-2 pl-8 relative">
+                                {[
+                                    { date: "2025 - PRESENT", title: "Student", desc: "Sri Krishna College of Engineering and Technology, Coimbatore.", c: glowStyles[0] },
+                                    { date: "MAR 2026", title: "IBM SkillsBuild Credential", desc: "Getting Started with Artificial Intelligence, issued through IBM SkillsBuild and accepted on Credly.", c: glowStyles[1] },
+                                    { date: "MAY 2026", title: "Coursera AI Learning", desc: "Google AI Professional Certificate and Google AI Essentials Specialization records are public on Coursera.", c: glowStyles[2] }
+                                ].map((item, i) => (
+                                    <Reveal key={i} delay={i * 150}>
+                                        <div className={`relative glass-base bg-lightCard dark:bg-darkCard border border-white/60 dark:border-white/10 p-6 rounded-2xl shadow-sm hover:scale-[1.02] transition-transform duration-300 cursor-default group ${item.c.shadow}`}>
+                                            <div className={`absolute -left-[41px] top-6 w-4 h-4 rounded-full bg-white dark:bg-void border-2 border-slate-300 group-hover:${item.c.borderStatic} transition-colors duration-300`} style={{boxShadow: `0 0 10px ${item.c.hex}`}}></div>
+                                            <span className={`font-mono text-[10px] tracking-widest font-bold uppercase text-slate-500 dark:text-gray-400 group-hover:${item.c.textStatic} transition-colors`}>{item.date}</span>
+                                            <h3 className="text-xl font-display font-bold text-slate-900 dark:text-white mt-1">{item.title}</h3>
+                                            <p className="text-sm text-slate-600 dark:text-gray-400 mt-2">{item.desc}</p>
+                                        </div>
+                                    </Reveal>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div ref={ref}>
+                            <div className="space-y-6 glass-base bg-lightCard dark:bg-darkCard border border-white/60 dark:border-white/10 p-8 rounded-3xl shadow-lg h-full">
+                                <h3 className="font-display font-bold text-xl mb-6 text-slate-900 dark:text-white">Skill Matrix</h3>
+                                {skills.map((skill, i) => (
+                                    <Reveal key={i} delay={i * 100}>
+                                        <div className="group cursor-default">
+                                            <div className="flex justify-between text-sm mb-2">
+                                                <span className={`font-sans font-medium text-slate-800 dark:text-white transition-colors group-hover:${skill.c.textStatic}`}>{skill.name}</span>
+                                                <span className={`font-mono font-bold text-slate-600 dark:text-gray-400 transition-colors group-hover:${skill.c.textStatic}`}>{skill.val}%</span>
+                                            </div>
+                                            <div className="h-2 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden shadow-inner">
+                                                <div className={`h-full bg-gradient-to-r ${skill.grad} rounded-full progress-bar-fill shadow-[0_0_10px_currentColor]`}
+                                                     style={{ width: isVisible ? `${skill.val}%` : '0%' }}></div>
+                                            </div>
+                                        </div>
+                                    </Reveal>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {techCards.map((card, i) => (
+                            <Reveal key={i} delay={i*100}>
+                                <div className={`glass-base bg-lightCard dark:bg-darkCard border p-6 rounded-2xl group transition-all duration-300 shadow-md hover:-translate-y-2 cursor-default ${card.c.border} ${card.c.shadow} ${card.c.bg}`}>
+                                    <div className={`w-12 h-12 rounded-xl bg-white dark:bg-white/10 flex items-center justify-center mb-6 transition-colors shadow-sm ${card.c.dot}`}>
+                                        <Icon name={card.icon} size={24} className={`text-slate-600 dark:text-white group-hover:text-white group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300`} />
+                                    </div>
+                                    <span className={`font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${card.c.textStatic} ${card.c.text}`}>{card.label}</span>
+                                    <h3 className="text-xl font-display font-bold text-slate-900 dark:text-white mt-1 mb-3">{card.title}</h3>
+                                    <p className="text-sm text-slate-600 dark:text-gray-400 leading-relaxed">{card.desc}</p>
+                                </div>
+                            </Reveal>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        const Learning = () => {
+            const certs = [
+                {
+                    source: "IBM SkillsBuild", badge: "https://images.credly.com/images/73c08e76-eb9c-4c03-92da-3dad49e99e5a/Getting_Started_With_Artificial_Intelligence_Badge.png",
+                    title: "Getting Started with AI", desc: "Level: Foundational. Type: Validation. Time: Hours. Cost: Free.",
+                    tags: ["Artificial Intelligence", "Generative AI", "Machine Learning", "Prompt Tuning"], verified: "Credly verified", c: glowStyles[1]
+                },
+                {
+                    source: "Coursera", icon: "cloud",
+                    title: "Google AI Professional", desc: "Completed May 2026. Public categories include Machine Learning, Data Analysis, Planning, Brand Management, and Google Cloud Platform.",
+                    tags: ["Professional track", "Productivity", "Data workflows"], verified: "Coursera Verified", c: glowStyles[2]
+                },
+                {
+                    source: "Coursera", icon: "cpu",
+                    title: "Google AI Essentials", desc: "Completed May 2026 with public course records across prompting, responsible AI, productivity, app building, and data analysis.",
+                    tags: ["Prompting", "App building", "Content creation"], verified: "Coursera Verified", c: glowStyles[3]
+                }
+            ];
+
+            const courses = ["Discover the Art of Prompting", "Stay Ahead of the AI Curve", "Use AI Responsibly", "Maximize Productivity With AI Tools", "Introduction to AI", "AI for App Building", "AI for Data Analysis", "AI for Content Creation", "AI for Writing and Communicating"];
+
+            return (
+                <section id="learning" className="py-24 relative z-10 max-w-[1400px] mx-auto px-6 lg:px-16 border-t border-slate-300 dark:border-white/10">
+                    <Reveal>
+                        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                            <h2 className="text-4xl md:text-5xl font-display font-black text-slate-900 dark:text-white">Credentials & Courses.</h2>
+                            <a href="https://www.coursera.org/user/92a729aaba78f5ec50fa6c3c2610d7a1" target="_blank" className="font-mono text-[10px] font-bold tracking-widest border border-slate-300 dark:border-white/20 bg-white dark:bg-white/5 text-slate-900 dark:text-white px-6 py-3 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition-colors active:scale-95 flex items-center gap-2 shadow-sm">
+                                OPEN COURSERA <Icon name="external-link" size={14} />
+                            </a>
+                        </div>
+                    </Reveal>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                        {certs.map((cert, i) => (
+                            <Reveal key={i} delay={i * 150} className="h-full">
+                                <div className={`glass-base bg-lightCard dark:bg-darkCard border p-8 flex flex-col h-full rounded-[2rem] group transition-all duration-300 shadow-md hover:-translate-y-2 cursor-pointer ${cert.c.border} ${cert.c.shadow} ${cert.c.bg}`}>
+                                    <div className="flex justify-between items-start mb-8">
+                                        <span className={`bg-white dark:bg-white/10 font-mono text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm transition-colors ${cert.c.textStatic} ${cert.c.text}`}>
+                                            {cert.source}
+                                        </span>
+                                        {cert.badge ? (
+                                            <img src={cert.badge} alt="Badge" className="w-12 h-12 object-contain group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300"/>
+                                        ) : (
+                                            <div className={`w-12 h-12 rounded-full bg-white dark:bg-white/10 shadow-sm flex items-center justify-center transition-colors ${cert.c.dot} text-slate-600 dark:text-white group-hover:text-white`}>
+                                                <Icon name={cert.icon} size={20} className="group-hover:scale-110 transition-transform"/>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="mt-auto">
+                                        <h3 className={`text-2xl font-display font-bold mb-3 transition-colors ${cert.c.textStatic} ${cert.c.text}`}>{cert.title}</h3>
+                                        <p className="text-sm text-slate-600 dark:text-gray-400 font-sans leading-relaxed mb-4">{cert.desc}</p>
+                                        <div className="flex flex-wrap gap-2 mb-6">
+                                            {cert.tags.map((t, j) => <span key={j} className="text-[10px] font-mono border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-slate-600 dark:text-gray-400 bg-white/50 dark:bg-transparent">{t}</span>)}
+                                        </div>
+                                        <span className={`text-xs font-mono font-bold flex items-center gap-2 transition-colors ${cert.c.textStatic} ${cert.c.text}`}>
+                                            <Icon name="check-circle" size={14} /> {cert.verified}
+                                        </span>
+                                    </div>
+                                </div>
+                            </Reveal>
+                        ))}
+                    </div>
+
+                    <Reveal>
+                        <h3 className="font-display font-bold text-2xl text-slate-900 dark:text-white mb-6">Visible Coursera Courses</h3>
+                        <div className="flex flex-wrap gap-3">
+                            {courses.map((course, i) => {
+                                const c = glowStyles[i % glowStyles.length];
+                                return (
+                                    <span key={i} className={`font-sans text-xs bg-lightCard dark:bg-darkCard border p-4 rounded-xl cursor-default transition-all duration-300 shadow-sm hover:-translate-y-1 hover:scale-105 ${c.border} ${c.textStatic} ${c.text} ${c.bg} ${c.shadow}`}>
+                                        {course}
+                                    </span>
+                                )
+                            })}
+                        </div>
+                    </Reveal>
+                </section>
+            );
+        };
+
+        const GlowList = ({ title, desc, items, type = "roles" }) => {
+            return (
                 <div>
-                    <p class="section-kicker">Profile</p>
-                    <h2>Public Information</h2>
-                    <p>
-                        This profile brings together the public details available from LinkedIn, GitHub, Coursera, Credly, and HackerRank. It avoids private analytics or account-only data that cannot be verified from the public web.
-                    </p>
-                    <div class="detail-grid" aria-label="Profile clarity points">
-                        <article>
-                            <span>Verified scope</span>
-                            <strong>Public records only</strong>
-                            <p>Every listed item is tied to a visible public profile or credential page.</p>
-                        </article>
-                        <article>
-                            <span>Direction</span>
-                            <strong>AI + Data + Cyber</strong>
-                            <p>The layout highlights learning progress, GitHub activity, and target roles.</p>
-                        </article>
+                    <Reveal>
+                        <h2 className="text-3xl md:text-4xl font-display font-black text-slate-900 dark:text-white mb-6">{title}</h2>
+                        <p className="text-sm text-slate-600 dark:text-gray-400 mb-8 leading-relaxed max-w-lg">{desc}</p>
+                    </Reveal>
+                    <div className="flex flex-col gap-3">
+                        {items.map((item, i) => {
+                            const c = glowStyles[i % glowStyles.length]; 
+                            return (
+                                <Reveal key={i} delay={i * 50} direction="left">
+                                    <div className={`group flex items-center gap-4 bg-lightCard dark:bg-darkCard px-5 py-4 rounded-xl border transition-all duration-300 shadow-sm hover:scale-[1.02] cursor-default hover:-translate-y-1 ${c.border} ${c.shadow} ${c.bg}`}>
+                                        <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors dark:bg-white/5 bg-white ${c.dot}`}>
+                                            <div className={`w-2 h-2 rounded-full bg-slate-300 dark:bg-gray-500 group-hover:hidden`}></div>
+                                            <Icon name={type === "roles" ? "crosshair" : "check"} size={12} className={`hidden group-hover:block dark:text-white text-white`} />
+                                        </div>
+                                        <span className={`font-sans font-medium uppercase text-xs tracking-wider transition-colors ${c.textStatic} ${c.text}`}>{item}</span>
+                                    </div>
+                                </Reveal>
+                            )
+                        })}
                     </div>
                 </div>
-                <div class="timeline" aria-label="Profile facts">
-                    <article class="timeline-item">
-                        <span>2025 - Present</span>
-                        <h3>Student</h3>
-                        <p>Sri Krishna College of Engineering and Technology, Coimbatore.</p>
-                    </article>
-                    <article class="timeline-item">
-                        <span>Mar 2026</span>
-                        <h3>IBM SkillsBuild Credential</h3>
-                        <p>Getting Started with Artificial Intelligence, issued through IBM SkillsBuild and accepted on Credly.</p>
-                    </article>
-                    <article class="timeline-item">
-                        <span>May 2026</span>
-                        <h3>Coursera AI Learning</h3>
-                        <p>Google AI Professional Certificate and Google AI Essentials Specialization records are public on Coursera.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
+            )
+        }
 
-        <section id="learning" class="section-band light">
-            <div class="section-inner">
-                <div class="section-heading">
-                    <div>
-                        <p class="section-kicker">Learning</p>
-                        <h2>Credentials And Courses</h2>
-                    </div>
-                    <a class="text-link" href="https://www.coursera.org/user/92a729aaba78f5ec50fa6c3c2610d7a1" target="_blank" rel="noreferrer">Open Coursera profile</a>
-                </div>
+        const Projects = () => {
+            const { gitData, repoList, isSyncing } = React.useContext(SyncContext);
+            const roles = ["Cyber Security Specialist", "Data Analyst", "Data Scientist", "Machine Learning Engineer", "Automation Engineer", "Python Developer", "Systems Integration Engineer"];
 
-                <div class="learning-grid">
-                    <article class="credential-card featured">
-                        <img class="badge-image" src="https://images.credly.com/images/73c08e76-eb9c-4c03-92da-3dad49e99e5a/Getting_Started_With_Artificial_Intelligence_Badge.png" alt="Getting Started with Artificial Intelligence badge">
+            return (
+                <section id="projects" className="py-24 relative z-10 max-w-[1400px] mx-auto px-6 lg:px-16 border-t border-slate-300 dark:border-white/10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
+                        <GlowList 
+                            title="Target Roles." 
+                            desc="Coursera verified public work preferences and target career trajectories mapping to data, security, and automation." 
+                            items={roles} 
+                            type="roles" 
+                        />
                         <div>
-                            <span class="status-pill">Credly verified</span>
-                            <h3>Getting Started with Artificial Intelligence</h3>
-                            <p>Issued by IBM SkillsBuild. Level: Foundational. Type: Validation. Time: Hours. Cost: Free.</p>
-                            <ul class="tag-list" aria-label="Credential skills">
-                                <li>Artificial Intelligence</li>
-                                <li>Generative AI</li>
-                                <li>Machine Learning</li>
-                                <li>Prompt Tuning</li>
-                                <li>Data Structures</li>
-                            </ul>
-                        </div>
-                    </article>
-
-                    <article class="credential-card">
-                        <span class="status-pill">Coursera</span>
-                        <h3>Google AI Professional Certificate</h3>
-                        <p>Completed May 2026. Public categories include Machine Learning, Data Analysis, Planning, Brand Management, and Google Cloud Platform.</p>
-                        <ul class="mini-list">
-                            <li>Professional certificate track</li>
-                            <li>AI tools, productivity, planning, and data workflows</li>
-                        </ul>
-                    </article>
-
-                    <article class="credential-card">
-                        <span class="status-pill">Coursera</span>
-                        <h3>Google AI Essentials Specialization</h3>
-                        <p>Completed May 2026 with public course records across prompting, responsible AI, productivity, app building, data analysis, content creation, and communication.</p>
-                        <ul class="mini-list">
-                            <li>Prompting and responsible AI</li>
-                            <li>App building, content creation, and communication</li>
-                        </ul>
-                    </article>
-                </div>
-
-                <div class="course-list" aria-label="Visible Coursera courses">
-                    <h3>Visible Coursera Courses</h3>
-                    <ul>
-                        <li>Discover the Art of Prompting</li>
-                        <li>Stay Ahead of the AI Curve</li>
-                        <li>Use AI Responsibly</li>
-                        <li>Maximize Productivity With AI Tools</li>
-                        <li>Introduction to AI</li>
-                        <li>AI for App Building</li>
-                        <li>AI for Data Analysis</li>
-                        <li>AI for Content Creation</li>
-                        <li>AI for Writing and Communicating</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-band">
-            <div class="section-inner">
-                <div class="section-heading">
-                    <div>
-                        <p class="section-kicker">Skills</p>
-                        <h2>Skill Panels</h2>
-                    </div>
-                </div>
-                <div class="skill-showcase" aria-label="Featured technical skills">
-                    <article class="skill-card python-card">
-                        <div class="skill-icon" aria-hidden="true">
-                            <span>Py</span>
-                        </div>
-                        <div>
-                            <span class="skill-label">Programming</span>
-                            <h3>Python</h3>
-                            <p>Automation, AI experiments, data workflows, scripting, and practical software foundations.</p>
-                        </div>
-                    </article>
-                    <article class="skill-card cpp-card">
-                        <div class="skill-icon" aria-hidden="true">
-                            <span>C++</span>
-                        </div>
-                        <div>
-                            <span class="skill-label">Core logic</span>
-                            <h3>C++</h3>
-                            <p>Structured programming, problem solving, memory-aware thinking, and performance-focused basics.</p>
-                        </div>
-                    </article>
-                    <article class="skill-card cloud-card">
-                        <div class="skill-icon" aria-hidden="true">
-                            <i data-lucide="shield-check" data-fallback="CS"></i>
-                        </div>
-                        <div>
-                            <span class="skill-label">Security</span>
-                            <h3>Cloud Security</h3>
-                            <p>Security-first interest across cloud platforms, access control, risk awareness, and protected systems.</p>
-                        </div>
-                    </article>
-                </div>
-                <div class="skill-bars" aria-label="Skill focus map">
-                    <div class="skill-bar">
-                        <span>Artificial Intelligence</span>
-                        <meter value="90" min="0" max="100">90%</meter>
-                    </div>
-                    <div class="skill-bar">
-                        <span>Data Analysis</span>
-                        <meter value="82" min="0" max="100">82%</meter>
-                    </div>
-                    <div class="skill-bar">
-                        <span>Prompt Engineering</span>
-                        <meter value="78" min="0" max="100">78%</meter>
-                    </div>
-                    <div class="skill-bar">
-                        <span>Python Development</span>
-                        <meter value="70" min="0" max="100">70%</meter>
-                    </div>
-                    <div class="skill-bar">
-                        <span>Cyber Security Interest</span>
-                        <meter value="66" min="0" max="100">66%</meter>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="section-band light">
-            <div class="section-inner">
-                <div class="section-heading">
-                    <div>
-                        <p class="section-kicker">Projects</p>
-                        <h2>Live GitHub Report</h2>
-                    </div>
-                    <span id="githubUpdated" class="muted">Checking GitHub...</span>
-                </div>
-
-                <div class="github-layout">
-                    <div class="github-stats" aria-label="GitHub public metrics">
-                        <div>
-                            <span id="repoCount">1</span>
-                            <small>Public repos</small>
-                        </div>
-                        <div>
-                            <span id="followerCount">0</span>
-                            <small>Followers</small>
-                        </div>
-                        <div>
-                            <span id="followingCount">1</span>
-                            <small>Following</small>
-                        </div>
-                        <div>
-                            <span id="starCount">1</span>
-                            <small>Repo stars</small>
+                            <Reveal>
+                                <h2 className="text-4xl md:text-5xl font-display font-black text-slate-900 dark:text-white mb-10">GitHub Report.</h2>
+                            </Reveal>
+                            <div className="grid grid-cols-2 gap-4 mb-8">
+                                {[
+                                    { label: "Public repos", val: gitData.repos, c: glowStyles[0] },
+                                    { label: "Followers", val: gitData.followers, c: glowStyles[1] },
+                                    { label: "Following", val: gitData.following, c: glowStyles[2] },
+                                    { label: "Repo stars", val: gitData.stars, c: glowStyles[3] },
+                                ].map((stat, i) => (
+                                    <Reveal key={i} delay={i*100}>
+                                        <div className={`glass-base bg-lightCard dark:bg-darkCard border p-6 rounded-2xl flex flex-col items-center justify-center text-center group transition-all duration-300 shadow-md hover:-translate-y-1 cursor-default ${stat.c.border} ${stat.c.bg} ${stat.c.shadow}`}>
+                                            <span className={`text-4xl font-display font-black mb-2 transition-colors ${stat.c.textStatic} ${stat.c.text} group-hover:scale-110`}>
+                                                {isSyncing ? "..." : stat.val}
+                                            </span>
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500 dark:text-gray-400">{stat.label}</span>
+                                        </div>
+                                    </Reveal>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
                     <div>
-                        <h3>Public Repositories</h3>
-                        <div id="repoList" class="repo-list">
-                            <article class="repo-item">
-                                <a href="https://github.com/Galleon-123/GalleonGT" target="_blank" rel="noreferrer">GalleonGT</a>
-                                <p>nothing</p>
-                                <span>Archived public repository</span>
-                            </article>
+                        <Reveal>
+                            <h2 className="text-3xl md:text-4xl font-display font-black text-slate-900 dark:text-white mb-8">Public Repositories</h2>
+                        </Reveal>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {repoList.length > 0 ? repoList.map((repo, i) => {
+                                const c = glowStyles[i % glowStyles.length];
+                                return (
+                                    <Reveal key={i} delay={i * 100}>
+                                        <a href={repo.html_url} target="_blank" className={`block glass-base bg-lightCard dark:bg-darkCard p-6 rounded-2xl group border transition-all duration-300 shadow-md hover:-translate-y-2 ${c.border} ${c.shadow} ${c.bg}`}>
+                                            <div className="flex justify-between items-start mb-3">
+                                                <h3 className={`text-lg font-display font-bold transition-colors flex items-center gap-2 ${c.textStatic} ${c.text}`}>
+                                                    <Icon name="folder-git-2" size={18} className="text-slate-500 group-hover:text-current group-hover:rotate-6 transition-transform" /> {repo.name}
+                                                </h3>
+                                                {repo.language && <span className="font-mono text-[10px] font-bold px-2 py-1 bg-white dark:bg-white/10 rounded text-slate-600 dark:text-gray-300 shadow-sm">{repo.language}</span>}
+                                            </div>
+                                            <p className="text-sm text-slate-600 dark:text-gray-400 mb-4">{repo.description || "No public description provided."}</p>
+                                            <div className="flex items-center gap-4 font-mono text-[10px] font-bold text-slate-500 uppercase">
+                                                <span className={`flex items-center gap-1 transition-colors ${c.textStatic} ${c.text}`}><Icon name="star" size={12} /> {repo.stargazers_count} Stars</span>
+                                            </div>
+                                        </a>
+                                    </Reveal>
+                                )
+                            }) : (
+                                <div className="glass-base bg-lightCard dark:bg-white/5 p-6 rounded-2xl text-slate-500 font-mono text-xs text-center col-span-2 shadow-md">
+                                    {isSyncing ? "Syncing data..." : "No repositories found."}
+                                </div>
+                            )}
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
+            );
+        };
 
-        <section class="section-band">
-            <div class="section-inner two-column">
-                <div>
-                    <p class="section-kicker">Career Direction</p>
-                    <h2>Public Work Preferences</h2>
-                    <p>Coursera lists these desired roles on the public profile.</p>
+        const Footer = () => (
+            <footer className="border-t border-slate-300 dark:border-white/10 bg-white dark:bg-void py-16 relative z-10">
+                <div className="max-w-[1400px] mx-auto px-6 lg:px-16 flex flex-col items-center text-center gap-8">
+                    <Reveal>
+                        <h2 className="text-4xl md:text-5xl font-display font-black text-slate-900 dark:text-white tracking-tighter">Connected Profiles</h2>
+                        <p className="text-slate-500 text-sm mt-4 max-w-md mx-auto">Public source check: May 21, 2026. Private analytics and account-only dashboard data are not included.</p>
+                    </Reveal>
+                    
+                    <Reveal delay={100}>
+                        <div className="flex flex-wrap justify-center gap-4">
+                            {[
+                                { name: "LinkedIn", url: "https://www.linkedin.com/in/ragul-kumar-e-5ba272399", icon: "linkedin", c: glowStyles[0] },
+                                { name: "GitHub", url: "https://github.com/Galleon-123", icon: "github", c: glowStyles[1] },
+                                { name: "Coursera", url: "https://www.coursera.org/user/92a729aaba78f5ec50fa6c3c2610d7a1", icon: "book", c: glowStyles[2] },
+                                { name: "Credly", url: "https://www.credly.com/users/ragul-kumar-e", icon: "award", c: glowStyles[3] },
+                                { name: "HackerRank", url: "https://www.hackerrank.com/profile/ragulkumare2007", icon: "code", c: glowStyles[4] }
+                            ].map((link, i) => (
+                                <a key={i} href={link.url} target="_blank" className={`flex items-center gap-2 glass-base bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 px-6 py-3 rounded-full transition-all text-xs font-mono font-bold tracking-widest text-slate-600 dark:text-gray-300 shadow-sm hover:scale-105 active:scale-95 group ${link.c.border} ${link.c.text} ${link.c.shadow} ${link.c.bg}`}>
+                                    <Icon name={link.icon} size={14} className="group-hover:scale-110 group-hover:-rotate-6 transition-transform" /> {link.name}
+                                </a>
+                            ))}
+                        </div>
+                    </Reveal>
                 </div>
-                <ul class="role-list" aria-label="Desired roles">
-                    <li>Cyber Security Specialist / Technician</li>
-                    <li>Data Analyst</li>
-                    <li>Data Scientist</li>
-                    <li>Machine Learning Engineer</li>
-                    <li>Automation Engineer</li>
-                    <li>Python Developer</li>
-                    <li>Systems Integration Engineer / Specialist</li>
-                </ul>
-            </div>
-        </section>
+            </footer>
+        );
 
-        <section id="sources" class="section-band footer-band">
-            <div class="section-inner">
-                <div class="section-heading">
-                    <div>
-                        <p class="section-kicker">Sources</p>
-                        <h2>Connected Profiles</h2>
-                    </div>
-                </div>
-                <div class="source-grid">
-                    <a href="https://www.linkedin.com/in/ragul-kumar-e-5ba272399" target="_blank" rel="noreferrer">LinkedIn</a>
-                    <a href="https://github.com/Galleon-123" target="_blank" rel="noreferrer">GitHub</a>
-                    <a href="https://www.coursera.org/user/92a729aaba78f5ec50fa6c3c2610d7a1" target="_blank" rel="noreferrer">Coursera</a>
-                    <a href="https://www.credly.com/users/ragul-kumar-e" target="_blank" rel="noreferrer">Credly</a>
-                    <a href="https://www.hackerrank.com/profile/ragulkumare2007" target="_blank" rel="noreferrer">HackerRank</a>
-                </div>
-                <p class="source-note">
-                    Public source check: May 21, 2026. Private LinkedIn analytics, profile visitor history, and account-only dashboard data are not included.
-                </p>
-            </div>
-        </section>
-    </main>
+        const App = () => {
+            const [entered, setEntered] = useState(false);
+            const [theme, setTheme] = useState('dark');
+            const [isSyncing, setIsSyncing] = useState(false);
+            const [lastSynced, setLastSynced] = useState(new Date().toLocaleTimeString());
+            const [toast, setToast] = useState(null);
+            
+            // GitHub Data State
+            const [gitData, setGitData] = useState({ repos: 1, followers: 0, following: 1, stars: 1 });
+            const [repoList, setRepoList] = useState([]);
+
+            const fetchGitData = async () => {
+                try {
+                    const [userRes, reposRes] = await Promise.all([
+                        fetch('https://api.github.com/users/Galleon-123'),
+                        fetch('https://api.github.com/users/Galleon-123/repos?sort=updated&per_page=4')
+                    ]);
+                    const user = await userRes.json();
+                    const repos = await reposRes.json();
+                    const stars = repos.reduce((acc, r) => acc + r.stargazers_count, 0);
+                    setGitData({ repos: user.public_repos||1, followers: user.followers||0, following: user.following||1, stars: stars||1 });
+                    if(Array.isArray(repos)) setRepoList(repos);
+                } catch(e) {}
+            };
+
+            // Initial fetch
+            useEffect(() => { fetchGitData(); }, []);
+
+            const triggerSync = () => {
+                if(isSyncing) return;
+                setIsSyncing(true);
+                Promise.all([
+                    new Promise(res => setTimeout(res, 2000)),
+                    fetchGitData()
+                ]).then(() => {
+                    setIsSyncing(false);
+                    setLastSynced(new Date().toLocaleTimeString());
+                    setToast("Webhooks synced successfully. All records updated.");
+                    setTimeout(() => setToast(null), 4000);
+                });
+            };
+
+            useEffect(() => {
+                if (theme === 'dark') document.documentElement.classList.add('dark');
+                else document.documentElement.classList.remove('dark');
+            }, [theme]);
+
+            const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+
+            return (
+                <SyncContext.Provider value={{ isSyncing, triggerSync, lastSynced, gitData, repoList }}>
+                    <main className="relative">
+                        {!entered && <GeminiEntry onComplete={() => setEntered(true)} />}
+                        
+                        {entered && (
+                            <div className="animate-fade-in">
+                                <AmbientBlobs />
+                                <Navbar theme={theme} toggleTheme={toggleTheme} />
+                                <Home />
+                                <SocialAnalytics />
+                                <Profile />
+                                <Learning />
+                                <Projects />
+                                <Footer />
+                                <Chatbot />
+
+                                {/* Toast Notification */}
+                                <div className={`fixed bottom-6 left-6 z-50 glass-base bg-emerald-500/90 text-white px-6 py-3 rounded-full flex items-center gap-3 transition-all duration-500 shadow-xl ${toast ? 'translate-x-0 opacity-100' : '-translate-x-20 opacity-0 pointer-events-none'}`}>
+                                    <Icon name="check-circle" size={18} />
+                                    <span className="font-mono text-xs font-bold tracking-wider">{toast}</span>
+                                </div>
+                            </div>
+                        )}
+                    </main>
+                </SyncContext.Provider>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
-
 </html>
