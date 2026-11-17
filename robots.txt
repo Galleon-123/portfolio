@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ragul-kumar-creative-portfolio.gigglyalbatross.chatgpt.site/sitemap.xml
