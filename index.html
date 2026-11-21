@@ -71,6 +71,15 @@
       </section>
     </div>
   </main>
+  <section class="resume-chat" aria-label="Portfolio assistant">
+    <button class="resume-chat-launch" id="resume-chat-launch" type="button" aria-controls="resume-chat-panel" aria-expanded="false"><span aria-hidden="true">✦</span> Ask Ragul's profile</button>
+    <div class="resume-chat-panel" id="resume-chat-panel" hidden>
+      <div class="resume-chat-head"><div><span class="resume-chat-kicker">RAGUL'S PORTFOLIO GUIDE</span><strong>Ask about the résumé</strong></div><button class="resume-chat-close" type="button" aria-label="Close portfolio assistant">×</button></div>
+      <div class="resume-chat-messages" id="resume-chat-messages" role="log" aria-live="polite"><p class="resume-chat-message resume-chat-message--bot">Hi! I can answer questions about Ragul Kumar E's resume, education, projects, skills, credentials, and profile links.</p></div>
+      <div class="resume-chat-prompts" aria-label="Suggested questions"><button type="button" data-chat-prompt="What is your name?">Name</button><button type="button" data-chat-prompt="Where are you studying?">Education</button><button type="button" data-chat-prompt="What are your skills?">Skills</button><button type="button" data-chat-prompt="Share your LinkedIn link">LinkedIn</button><button type="button" data-chat-prompt="What projects have you built?">Projects</button></div>
+      <form class="resume-chat-form" id="resume-chat-form"><label class="sr-only" for="resume-chat-input">Ask about Ragul's profile</label><input id="resume-chat-input" name="question" type="text" maxlength="180" autocomplete="off" placeholder="Ask about the résumé…"><button type="submit">Send <span aria-hidden="true">↗</span></button></form>
+    </div>
+  </section>
   <footer class="site-footer wrap"><a class="footer-brand" href="#home">ragul<span>.</span></a><span>© <span id="year">2026</span> Ragul Kumar E</span><div><button id="motion-toggle" data-motion-toggle aria-pressed="false" hidden>Pause animations</button><a href="https://github.com/Galleon-123/portfolio" target="_blank" rel="noopener noreferrer">Website source ↗</a><a href="#home">Back to start ↑</a></div></footer>
 </body>
 </html>
