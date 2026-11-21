@@ -3,6 +3,51 @@ const year = document.getElementById('year');
 if (year) year.textContent = new Intl.DateTimeFormat('en', { timeZone: 'Asia/Kolkata', year: 'numeric' }).format(new Date());
 document.getElementById('print-resume')?.addEventListener('click', () => window.print());
 
+// Local-only portfolio guide. Responses are intentionally limited to verified résumé details.
+const chatLaunch = document.getElementById('resume-chat-launch');
+const chatPanel = document.getElementById('resume-chat-panel');
+const chatClose = document.querySelector('.resume-chat-close');
+const chatForm = document.getElementById('resume-chat-form');
+const chatInput = document.getElementById('resume-chat-input');
+const chatMessages = document.getElementById('resume-chat-messages');
+if (chatLaunch && chatPanel && chatForm && chatInput && chatMessages) {
+  const answers = [
+    { test: /(^|\s)(name|who are you|who is ragul)(\s|$)/i, answer: 'The portfolio belongs to Ragul Kumar E, a B.Tech Information Technology student.' },
+    { test: /linkedin/i, answer: 'LinkedIn: https://www.linkedin.com/in/ragul-kumar-e-galleongt/' },
+    { test: /github|source code|repository/i, answer: 'GitHub: https://github.com/Galleon-123 — Portfolio source: https://github.com/Galleon-123/portfolio' },
+    { test: /hackerrank/i, answer: 'HackerRank: https://www.hackerrank.com/profile/ragulkumare2007' },
+    { test: /coursera/i, answer: 'Coursera profile: https://www.coursera.org/user/92a729aaba78f5ec50fa6c3c2610d7a1' },
+    { test: /credly/i, answer: 'Credly: https://www.credly.com/users/ragul-kumar-e' },
+    { test: /study|college|education|pursu|degree/i, answer: 'Ragul is pursuing B.Tech Information Technology at Sri Krishna College of Engineering and Technology, Coimbatore (2025–2029).' },
+    { test: /skill|technology|programming|language/i, answer: 'Skills and foundations include C, C++, Java, Python, HTML, CSS, JavaScript, SQL, PostgreSQL, MySQL, data structures, algorithms, OOP, DBMS, operating systems, computer networks, Linux, and AI tools.' },
+    { test: /project|uniserv|web os/i, answer: 'Projects: UniServ, where Ragul developed the workers’ application for a platform connecting workers with people nearby; and Web OS, an ongoing lightweight server-hosted computer environment for multi-device access.' },
+    { test: /certificate|credential|course|machine learning|google ai/i, answer: 'Selected credentials include Python for Machine Learning training (98% exam score), Google AI Professional Certificate, Google AI Essentials, and Crash Course on Python. Open the Credentials section to view verification links.' },
+    { test: /location|where.*live|sathyamangalam/i, answer: 'Ragul is based in Sathyamangalam, Tamil Nadu, India.' },
+    { test: /resume|cv/i, answer: 'You can open the complete résumé from the “View résumé” button at the top of this portfolio.' }
+  ];
+  const addMessage = (text, type) => {
+    const message = document.createElement('p');
+    message.className = `resume-chat-message resume-chat-message--${type}`;
+    message.textContent = text;
+    chatMessages.append(message);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  };
+  const openChat = () => { chatPanel.hidden = false; chatLaunch.setAttribute('aria-expanded', 'true'); chatInput.focus(); };
+  const closeChat = () => { chatPanel.hidden = true; chatLaunch.setAttribute('aria-expanded', 'false'); chatLaunch.focus(); };
+  chatLaunch.addEventListener('click', () => chatPanel.hidden ? openChat() : closeChat());
+  chatClose?.addEventListener('click', closeChat);
+  document.querySelectorAll('[data-chat-prompt]').forEach(button => button.addEventListener('click', () => { chatInput.value = button.dataset.chatPrompt; chatForm.requestSubmit(); }));
+  chatForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const question = chatInput.value.trim();
+    if (!question) return;
+    addMessage(question, 'user');
+    const match = answers.find(item => item.test.test(question));
+    addMessage(match?.answer || 'I can help with Ragul’s name, education, skills, projects, credentials, location, résumé, and LinkedIn, GitHub, HackerRank, Coursera, or Credly links.', 'bot');
+    chatInput.value = '';
+  });
+}
+
 const story = document.getElementById('story');
 if (story) {
   const systemMotion = matchMedia('(prefers-reduced-motion: reduce)');
